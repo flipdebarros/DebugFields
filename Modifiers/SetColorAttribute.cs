@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 namespace Utils.DebugFields {
@@ -5,10 +6,16 @@ public class SetColorAttribute : DebugModifierAttribute {
 
 	public Color color;
 
-	public SetColorAttribute(float r, float g, float b, float a = 1f) {
-		color = new Color(r, g, b, a);
-	}
+	public SetColorAttribute(string fieldName) : base(fieldName) { }
 
+	public override void OnGUI(SerializedProperty property) {
+		if (property.propertyType != SerializedPropertyType.Color) {
+			Debug.LogError("SetColor Attribute has to be on a Color to modify another variable");
+			return;
+		}
+		property.colorValue = EditorGUILayout.ColorField(new GUIContent("Color"), property.colorValue);
+	}
+	
 }
 
 }

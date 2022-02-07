@@ -1,5 +1,5 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
@@ -9,52 +9,40 @@ namespace Utils.DebugFields {
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
 public class DebugFieldsAttribute : Attribute {
 
+	public MonoBehaviour target;
+	public FieldInfo[] fields;
+	public Dictionary<string, List<FieldInfo>> modifiers;
+
 	private Color _color = Color.green;
-	private Vector2 _offset;
+
+	public DebugFieldsAttribute(float r, float g, float b, float a = 1f) {
+		_color = new Color(r, g, b, a);
+	}
+	public DebugFieldsAttribute() { }
 	
-	public void Draw(MonoBehaviour obj) {
-
-		var gameObject = obj.gameObject;
-
-		_offset = gameObject.transform.position;
-		
-		foreach (var attribute in obj.GetType().GetCustomAttributes(typeof(DebugModifierAttribute), false)) {
-			switch (attribute) {
-				case SetOffsetAttribute att:
-					_offset += att.offset;
-					break;
-				case SetColorAttribute att:
-					_color = att.color;
-					break;
-			}
-		}
-
-		var fields = obj.GetType().GetFields(BindingFlags.NonPublic | BindingFlags.Instance).Where(
-			f => f.IsDefined(typeof(DrawFieldAttribute)));
-
-		Handles.color = _color;
-		
+	public void Draw() {
 		foreach (var field in fields) {
-			var drawer = field.GetCustomAttribute(typeof(DrawFieldAttribute)) as DrawFieldAttribute;
+			var drawer = field.GetCustomAttribute<DrawFieldAttribute>();
+			var value = field.GetValue(target);
+			
+			var position = (Vector2) target.gameObject.transform.position;
+			Handles.color = drawer.IsColorDefined ? drawer.color : _color;
 
-			var position = _offset;
-
-			var settings = field.GetCustomAttributes(typeof(DebugModifierAttribute));
-			foreach (var attribute in settings) {
-				switch (attribute) {
-					case SetOffsetAttribute att:
-						position += att.offset;
-						break;
-					case SetColorAttribute att:
-						Handles.color = att.color;
-						break;
+			if (modifiers.ContainsKey(field.Name)) {
+				foreach (var modifier in modifiers[field.Name]) {
+					switch (modifier.GetCustomAttribute<DebugModifierAttribute>()) {
+						case SetOffsetAttribute _:
+							position += (Vector2) modifier.GetValue(target);
+							break;
+						case SetColorAttribute _:
+							Handles.color = (Color) modifier.GetValue(target);
+							break;
+					}
 				}
 			}
-			drawer?.Draw(field.GetValue(obj), position);
 
-			Handles.color = _color;
+			drawer.Draw(value, position);
 		}
-
 		Handles.color = Color.white;
 	}
 	

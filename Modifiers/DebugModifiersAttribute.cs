@@ -1,11 +1,15 @@
-using System;
+using UnityEditor;
+using UnityEngine;
 
 namespace Utils.DebugFields {
+public abstract class DebugModifierAttribute : PropertyAttribute {
+	public string ModifyField { get; }
 
-[AttributeUsage(AttributeTargets.Class | AttributeTargets.Field | 
-                AttributeTargets.Property, AllowMultiple = true)]
-public abstract class DebugModifierAttribute : Attribute {
-	
+	protected DebugModifierAttribute(string fieldName) {
+		ModifyField = fieldName;
+	}
+
+	public abstract void OnGUI(SerializedProperty property);
 }
 
 }
