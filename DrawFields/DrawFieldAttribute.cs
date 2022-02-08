@@ -10,8 +10,8 @@ public abstract class DrawFieldAttribute : PropertyAttribute {
 
 	protected DrawFieldAttribute() { }
 
-	protected DrawFieldAttribute(float r, float g, float b, float a = 1f) {
-		color = new Color(r, g, b, a);
+	protected DrawFieldAttribute(float r, float g, float b) {
+		color = new Color(r, g, b, 1f);
 		IsColorDefined = true;
 	}
 	

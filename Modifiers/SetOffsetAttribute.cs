@@ -4,9 +4,6 @@ using UnityEngine;
 namespace Utils.DebugFields {
 
 public class SetOffsetAttribute : DebugModifierAttribute {
-
-	public Vector2 offset;
-
 	public SetOffsetAttribute (string fieldName) : base(fieldName) { }
 
 	public override void OnGUI(SerializedProperty property) {

@@ -19,7 +19,7 @@ public class DrawCircleAttribute : DrawFieldAttribute {
 	public override string PropertyName => "Radius";
 	
 	public DrawCircleAttribute() {}
-	public DrawCircleAttribute(float r, float g, float b, float a = 1f) : base(r, g, b, a) {}
+	public DrawCircleAttribute(float r, float g, float b) : base(r, g, b) {}
 	
 	public override void Draw (object value, Vector2 position) {
 		if (value is not (float or int or uint)) {

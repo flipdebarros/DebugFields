@@ -11,7 +11,7 @@ public class DrawBoxAttribute : DrawFieldAttribute {
     public override string PropertyName => "Rect";
 
     public DrawBoxAttribute() {}
-    public DrawBoxAttribute(float r, float g, float b, float a = 1f) : base(r, g, b, a) {}
+    public DrawBoxAttribute(float r, float g, float b) : base(r, g, b) {}
 
     private Rect GetValue(object value) => value switch {
         Rect rect => rect,

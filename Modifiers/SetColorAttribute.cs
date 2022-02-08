@@ -3,9 +3,6 @@ using UnityEngine;
 
 namespace Utils.DebugFields {
 public class SetColorAttribute : DebugModifierAttribute {
-
-	public Color color;
-
 	public SetColorAttribute(string fieldName) : base(fieldName) { }
 
 	public override void OnGUI(SerializedProperty property) {

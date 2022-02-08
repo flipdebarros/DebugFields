@@ -11,7 +11,7 @@ public class DrawDottedBoxAttribute : DrawFieldAttribute {
     public override string PropertyName => "Rect";
 
     public DrawDottedBoxAttribute() {}
-    public DrawDottedBoxAttribute(float r, float g, float b, float a = 1f) : base(r, g, b, a) {}
+    public DrawDottedBoxAttribute(float r, float g, float b) : base(r, g, b) {}
     
     private Rect GetValue(object value) => value switch {
         Rect rect => rect,
