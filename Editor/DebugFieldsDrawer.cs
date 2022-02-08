@@ -44,9 +44,10 @@ public class DebugFieldsDrawer : Editor {
 	}
 
 	public override void OnInspectorGUI () {
-		using (var check = new EditorGUI.ChangeCheckScope()) {
+		if(_attribute != null) {
+			using var check = new EditorGUI.ChangeCheckScope();
 			_enabled = GUILayout.Toggle(_enabled, "Debug Fields");
-			if(check.changed) SceneView.RepaintAll();
+			if (check.changed) SceneView.RepaintAll();
 		}
 
 		base.OnInspectorGUI();

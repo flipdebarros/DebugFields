@@ -15,7 +15,7 @@ public class FieldDrawer : PropertyDrawer {
 		label.text += " (" + field.FieldType + ")";
 
 		using (new EditorGUILayout.VerticalScope(EditorStyles.helpBox)) {
-			EditorGUILayout.LabelField(label);
+			EditorGUILayout.LabelField(label, EditorStyles.boldLabel);
 			EditorGUILayout.PropertyField(property, new GUIContent(field.PropertyName)); 
 			foreach (var modifier in DrawModifiers(property)) {
 				var (attr, prop) = modifier;
