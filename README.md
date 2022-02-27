@@ -1,4 +1,7 @@
 # DebugFields
+
+<i>UPDATE: I'm currently working on an inproved version of this tool with a better implementation that's also simpler and more flexible</i>
+
 This repo contains some unity attributes and property drawers to help visualize some fields in a MonoBehaviour.
 While working on my 2D game projects in unity, I often found myself having to find a way to visualize some parameters for some script on the actual scene. And even after learning about the OnDrawGizmos, it still felt repetitive doing that for every field I want to debug. I created this utility that, just by adding an attribute to it, draws the variables in the scene. I started with functions to draw circles and boxes, but I intend to expand this tool as it becomes necessary.
 
